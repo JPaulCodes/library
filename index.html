@@ -15,7 +15,21 @@
   <header>
     <h1>Digital Library</h1>
   </header>
-  <main>Main</main>
+  <main>
+    <form class="book-form">
+      <label for="title">Title</label>
+      <input id="title" type="text" value="testTitle" name="title">
+      <label for="author">Author</label>
+      <input id="author" type="text" value="testAuthor" name="author">
+      <label for="pages">Pages</label>
+      <input id="pages" type="number" value="100" name="pages">
+      <label for="read">Have you finished the book?</label>
+      <input id="read" type="checkbox" name="read" value="read">
+      <button class="submit-button">Submit</button>
+    </form>
+    <div class="book-container">
+    </div>
+  </main>
   <footer>Footer</footer>
 </body>
 </html>
