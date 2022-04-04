@@ -1,3 +1,6 @@
+const bookForm = document.querySelector('.book-form');
+const bookContainer = document.querySelector('.book-container');
+
 const myLibrary = [];
 
 function CreateBook(title, author, pages, read) {
@@ -13,3 +16,11 @@ function addBook(title, author, pages, read) {
   const book = new CreateBook(title, author, pages, hasRead);
   myLibrary.push(book);
 }
+
+bookForm.addEventListener('submit', (ev) => {
+  const fd = new FormData(bookForm);
+
+  ev.preventDefault();
+  addBook(...fd.values());
+  bookForm.reset();
+});
