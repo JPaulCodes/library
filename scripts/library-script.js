@@ -3,48 +3,57 @@ const bookContainer = document.querySelector('.book-container');
 
 const myLibrary = [];
 
-function CreateBook(title, author, pages, read) {
+function CreateBook(title, author, pages, finished) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.read = read;
+  this.finished = finished;
 }
 
-function addBook(title, author, pages, read) {
-  let hasRead = false;
-  if (read) hasRead = true;
-  const book = new CreateBook(title, author, pages, hasRead);
+function addBook(title, author, pages, finished) {
+  let hasFinished;
+  finished ? (hasFinished = true) : (hasFinished = false);
+  const book = new CreateBook(title, author, pages, hasFinished);
   myLibrary.push(book);
 }
 
-function generateBookCard(book) {
+function removeBook() {
+  const index = this.parentNode.dataset.arrayIndex;
+  myLibrary.splice(index, 1);
+  document.querySelector(`[data-array-index="${index}"]`).remove();
+}
+
+function createBookCard(book, index) {
   const bookCard = document.createElement('div');
   const bookTitle = document.createElement('p');
   const bookAuthor = document.createElement('p');
   const bookPages = document.createElement('p');
-  const bookRead = document.createElement('button');
+  const bookFinished = document.createElement('button');
+  const removeBtn = document.createElement('button');
 
   bookCard.classList.add('book-card');
+  bookCard.dataset.arrayIndex = index;
   bookTitle.innerText = book.title;
   bookAuthor.innerText = book.author;
   bookPages.innerText = book.pages;
-
-  if (book.read) {
-    bookRead.classList.add('finished');
-    bookRead.innerText = 'Finished';
+  removeBtn.innerText = 'Remove';
+  removeBtn.onclick = removeBook;
+  if (book.finished) {
+    bookFinished.classList.add('finished');
+    bookFinished.innerText = 'Finished';
   } else {
-    bookRead.classList.add('not-finished');
-    bookRead.innerText = 'Not Finished';
+    bookFinished.classList.add('not-finished');
+    bookFinished.innerText = 'Not Finished';
   }
 
-  bookCard.append(bookTitle, bookAuthor, bookPages, bookRead);
+  bookCard.append(bookTitle, bookAuthor, bookPages, bookFinished, removeBtn);
   return bookCard;
 }
 
 function updateBookContainer() {
   bookContainer.replaceChildren();
-  myLibrary.forEach((book) => {
-    const bookCard = generateBookCard(book);
+  myLibrary.forEach((book, index) => {
+    const bookCard = createBookCard(book, index);
     bookContainer.appendChild(bookCard);
   });
 }
