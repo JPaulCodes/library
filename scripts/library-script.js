@@ -17,6 +17,7 @@ function addBook(title, author, pages, finished) {
   const book = new CreateBook(title, author, pages, hasFinished);
 
   myLibrary.push(book);
+  updateBookContainer();
 }
 
 function removeBook() {
@@ -24,6 +25,7 @@ function removeBook() {
 
   myLibrary.splice(index, 1);
   document.querySelector(`[data-index="${index}"]`).remove();
+  updateBookContainer();
 }
 
 function createBookCard(book, index) {
@@ -67,6 +69,5 @@ bookForm.addEventListener('submit', (event) => {
 
   event.preventDefault();
   addBook(...form.values());
-  updateBookContainer();
   bookForm.reset();
 });
